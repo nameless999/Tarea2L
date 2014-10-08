@@ -12,7 +12,7 @@ package game;
  */
 public class Enemigo_Horizontal extends Enemigo_Lineal {
 
-    public Enemigo_Horizontal(char tipo, int maxmov, int pasos, char direccion, int y, int x, char nombre) {
+    public Enemigo_Horizontal(char tipo, int maxmov, int pasos, char direccion, int x, int y, char nombre) {
         super(tipo, maxmov, pasos, direccion, y, x, nombre);
     }
     
@@ -20,9 +20,9 @@ public class Enemigo_Horizontal extends Enemigo_Lineal {
     public char siguiente_movimiento(char[][] map, int largo, int ancho){
         int x = this.getX();
         int y = this.getY();
-        if(this.getTipo() == 'H' && this.getTipo() != this.getPasos())
+
+        if(this.getMaxmov() != this.getPasos())
         {
-            
             if(this.getDireccion() == 'R' && x+2 < ancho)
             {
                 if (map[y][x+2] == '0')
@@ -129,10 +129,11 @@ public class Enemigo_Horizontal extends Enemigo_Lineal {
                 this.setPasos(0);
                 this.setPasos(this.getPasos()+1);
                 return '1';    
-            }   
+            } 
         }
+              
         return '1';
-}
+    }
 
 
 }

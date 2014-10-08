@@ -12,23 +12,23 @@ public class Mapa {
 
     public Mapa(int ancho, int largo)
     {
-            Map = new char[largo][ancho*2]; 	
+            Map = new char[largo][ancho]; 	
     }
 
     public char[][] Map(int ancho, int largo, BufferedReader br, Usuario user)
     {
         // Apertura del fichero y creacion de BufferedReader para poder
         // hacer una lectura comoda (disponer del metodo readLine()).
-        try{    
+        try{
             for (int i = 0; i< largo ; i++){
-                for (int j = 0; j < ancho*2; j++ ){
+                for (int j = 0; j < ancho; j++ ){
                     char read = (char)br.read(); 
                     Map[i][j] = read;
                 }
             }
 
             for (int i = 0; i< largo ; i++){
-                for (int j = 0; j < ancho*2; j++ ){
+                for (int j = 0; j < ancho; j++ ){
                     if(Map[i][j] == 'I')
                     {
                         System.out.println(i);
@@ -50,7 +50,7 @@ public class Mapa {
     {
         for (int i = 0; i< largo ; i++){
             System.out.print("\033[30C");
-            for (int j = 0; j < ancho*2; j++ ){
+            for (int j = 0; j < ancho; j++ ){
                 System.out.print(Map[i][j]);
             }
         }

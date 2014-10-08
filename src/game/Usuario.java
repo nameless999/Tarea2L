@@ -1,4 +1,5 @@
 package game;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -8,46 +9,62 @@ import java.util.Scanner;
 public class Usuario {
     private int[] pos;
 
-	public Usuario()
-	{
-		pos = new int[3];
-		pos[0] = 0;
-		pos[1] = 0;
-		pos[2] = 0;
-	}
-
-	public  char dontMove(char[][] Map)
+    public Usuario()
     {
-       if(Map[pos[0]][pos[1]] == 'a') //Si la casilla actual es == a (Switch)...
-       {
-          System.out.print("\033[2J\033[1;1H"); 
-          System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'a' <('o'<).\n\n\n\n");
-          //Switch(Map,listaEnemigosSwitch,'a');
-          return '1';
-       }
+            pos = new int[3];
+            pos[0] = 0;
+            pos[1] = 0;
+            pos[2] = 0;
+    }
+    
+    public void ActSwitch(char[][] map, List<Elemento> lista, char label)
+    {
+ 
+        for (Elemento objeto : lista) {
+            if(objeto.getLabel() == 'S')
+            {
+                Switch interruptor = (Switch) objeto;
+                if(interruptor.getNombre() == label)
+                {
+                    interruptor.activar_switch(map);
+                }
+            }
+        }
+    }
+    
 
-       else if(Map[pos[0]][pos[1]] == 'b') //Si la casilla de la derecha es == a (Switch)...
-       {
-          System.out.print("\033[2J\033[1;1H"); 
-          System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'b' <('o'<).\n\n\n\n");
-          //Switch(Map,listaEnemigosSwitch,'b');
-          return '1';
-       }
+    public  char dontMove(char[][] Map, List<Elemento> lista )
+    {
+        if(Map[pos[0]][pos[1]] == 'a') //Si la casilla actual es == a (Switch)...
+        {
+           System.out.print("\033[2J\033[1;1H"); 
+           System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'a' <('o'<).\n\n\n\n");
+           this.ActSwitch(Map,lista,'a');
+           return '1';
+        }
 
-       else if(Map[pos[0]][pos[1]] == 'c') //Si la casilla de la derecha es == a (Switch)...
-       {
-          System.out.print ("\033[2J\033[1;1H"); 
-          System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'c' <('o'<).\n\n\n\n");
-          //Switch(Map,listaEnemigosSwitch,'c');
-          return '1';
-       }
+        else if(Map[pos[0]][pos[1]] == 'b') //Si la casilla de la derecha es == a (Switch)...
+        {
+           System.out.print("\033[2J\033[1;1H"); 
+           System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'b' <('o'<).\n\n\n\n");
+           this.ActSwitch(Map,lista,'b');
+           return '1';
+        }
 
-       else
-       {
-          System.out.print ("\033[2J\033[1;1H"); 
-          System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +") <('o'<).\n\n\n\n");
-          return '1';
-       }
+        else if(Map[pos[0]][pos[1]] == 'c') //Si la casilla de la derecha es == a (Switch)...
+        {
+           System.out.print ("\033[2J\033[1;1H"); 
+           System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +")y has activado el Switch 'c' <('o'<).\n\n\n\n");
+           this.ActSwitch(Map,lista,'c');
+           return '1';
+        }
+
+        else
+        {
+           System.out.print ("\033[2J\033[1;1H"); 
+           System.out.print("Te has quedado quieto en la posición("+ pos[0] + ',' + pos[2] +") <('o'<).\n\n\n\n");
+           return '1';
+        }
     }
 
     /******** Función: movDown ********
@@ -55,7 +72,7 @@ public class Usuario {
     Parámetros: string literal (entrada), posición actual
     Retorno: entero característico de la función (label)
     ****************************************/
-    public  char movDown(char[][] Map) 
+    public  char movDown(char[][] Map, List<Elemento> lista) 
     {
        //char nombreEnemigo;
        if(Map[pos[0]+1][pos[1]] == '0') //Si la casilla de abajo es == 0 (válida)...
@@ -99,7 +116,7 @@ public class Usuario {
           pos[0] += 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'a');
+          this.ActSwitch(Map, lista, 'a');
           return '1';
        }
 
@@ -117,7 +134,7 @@ public class Usuario {
           pos[0] += 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición("+ pos[0] + ',' + pos[2] +") sobre el Switch b y has abierto la puerta B.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'b');
+          this.ActSwitch(Map, lista, 'b');
           return '1';
        }
 
@@ -136,7 +153,7 @@ public class Usuario {
           pos[0] += 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch c y has abierto la puerta C.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'c');
+          this.ActSwitch(Map, lista, 'c');
           return '1';
        }
 
@@ -151,7 +168,7 @@ public class Usuario {
     Parámetros: string literal (entrada), posición actual
     Retorno: entero característico de la función (label)
     ****************************************/
-    public  char movUp(char[][] Map) // S
+    public  char movUp(char[][] Map, List<Elemento> lista) // S
     {
        if(Map[pos[0]-1][pos[1]] == '0') //Si la casilla de abajo es == 0 (válida)...
        {
@@ -194,7 +211,7 @@ public class Usuario {
           pos[0] -= 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'a');
+          this.ActSwitch(Map, lista, 'a');
           return '1';
        }
 
@@ -212,7 +229,7 @@ public class Usuario {
           pos[0] -= 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch b y has abierto la puerta B.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'b');
+          this.ActSwitch(Map, lista, 'b');
           return '1';
        }
 
@@ -231,7 +248,7 @@ public class Usuario {
           pos[0] -= 1; //Dejamos nuestra fila como 0
           pos[1] = pos[1]; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
           System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch c y has abierto la puerta C.\n\n\n\n");
-          //Switch(Map, listaEnemigosSwitch, 'c');
+          this.ActSwitch(Map, lista, 'c');
           return '1';
        }
        else
@@ -245,7 +262,7 @@ public class Usuario {
     Parámetros: string literal (entrada), posición actual
     Retorno: entero característico de la función (label)
     ****************************************/
-    public  char movLeft(char[][] Map)
+    public  char movLeft(char[][] Map, List<Elemento> lista)
     {
           if(Map[pos[0]][pos[1]-2] == '0') //Si la casilla que está a la derecha es == 0 (válida)...
           {
@@ -289,7 +306,7 @@ public class Usuario {
              pos[1] -= 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] -= 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'a');
+             this.ActSwitch(Map, lista, 'a');
              return '1';
           }
 
@@ -309,7 +326,7 @@ public class Usuario {
              pos[1] -= 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] -= 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'b');
+             this.ActSwitch(Map, lista, 'b');
              return '1';
           }
 
@@ -328,7 +345,7 @@ public class Usuario {
              pos[1] -= 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] -= 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'c');
+             this.ActSwitch(Map, lista, 'c');
              return '1';
           }
 
@@ -344,7 +361,7 @@ public class Usuario {
     Parámetros: string literal (entrada), posición actual
     Retorno: entero característico de la función (label)
     ****************************************/
-    public  char movRight(char[][] Map)
+    public  char movRight(char[][] Map, List<Elemento> lista)
     {
        if(Map[pos[0]][pos[1]+2] == '0') //Si la casilla que está a la derecha es == 0 (válida)...
           {
@@ -388,7 +405,7 @@ public class Usuario {
              pos[1] += 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] += 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch a y has abierto la puerta A.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'a');
+             this.ActSwitch(Map, lista, 'a');
              return '1';
           }
 
@@ -408,7 +425,7 @@ public class Usuario {
              pos[1] += 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] += 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch b y has abierto la puerta B.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'b');
+             this.ActSwitch(Map, lista, 'b');
              return '1';
           }
 
@@ -428,7 +445,7 @@ public class Usuario {
              pos[1] += 2; //Dejamos nuestra columna como 2, es decir, una casilla a la derecha de la pos actual
              pos[2] += 1;
              System.out.print("Te has movido a la posición ("+ pos[0] + ',' + pos[2] +") sobre el Switch c y has abierto la puerta C.\n\n\n\n");
-             //Switch(Map, listaEnemigosSwitch, 'c');
+             this.ActSwitch(Map, lista, 'c');
              return '1';
           }
 
@@ -443,7 +460,7 @@ public class Usuario {
     Parámetros: string literal (entrada), posición actual, largo y ancho del mapa
     Retorno:  
     ****************************************/
-    public char movUsuario(char[][] Map, int largo, int ancho)
+    public char movUsuario(char[][] Map, int largo, int ancho, List<Elemento> lista)
     {
         //int x,y;
             Scanner in = new Scanner ( System.in );
@@ -453,10 +470,9 @@ public class Usuario {
 
             if (pos[0] == largo-1 && pos[1] == ancho-2) // Esquina inferior derecha
             {
-
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
@@ -468,7 +484,7 @@ public class Usuario {
 
               else if (tecla == 'w' || tecla == 'W')
               {
-                 return movUp(Map); 
+                 return movUp(Map, lista); 
               }
 
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
@@ -480,7 +496,7 @@ public class Usuario {
 
               else if (tecla == 'a' || tecla =='A')
               {
-                return movLeft(Map);
+                return movLeft(Map,lista);
               }
             } 
 
@@ -488,17 +504,17 @@ public class Usuario {
             {
                  if (tecla == 'x' || tecla == 'X')
                  {
-                    return dontMove(Map);
+                    return dontMove(Map,lista);
                  }
 
                  else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
                  {
-                    return movRight(Map);
+                    return movRight(Map,lista);
                  }
 
                  else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
                  {
-                    return movDown(Map);
+                    return movDown(Map,lista);
                  }
             
                  else if(tecla == 'w' || tecla == 'W')
@@ -520,7 +536,7 @@ public class Usuario {
             {
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
@@ -539,29 +555,29 @@ public class Usuario {
 
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
               {
-                 return movDown(Map);   
+                 return movDown(Map, lista);   
               }
 
               else if (tecla == 'a' || tecla =='A')
               {
-                return movLeft(Map);
+                return movLeft(Map, lista);
               }  
             }
             else if(pos[0] == largo-1 && pos[1] == 0) // Esquina inferior izquierda
             {
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
               {
-                 return movRight(Map);   
+                 return movRight(Map, lista);   
               }  
 
               else if (tecla == 'w' || tecla == 'W')
               {
-                 return movUp(Map); 
+                 return movUp(Map, lista); 
               }
 
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
@@ -583,22 +599,22 @@ public class Usuario {
               
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
               {
-                 return movRight(Map);
+                 return movRight(Map, lista);
               }
               
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
               {
-                 return movDown(Map);
+                 return movDown(Map, lista);
               }   
 
               else if (tecla == 'w' || tecla == 'W') //Si presion la tecla W, es decir arriba....
               {
-                 return movUp(Map);
+                 return movUp(Map, lista);
               }   
 
               else if (tecla == 'a' || tecla == 'A')
@@ -613,12 +629,12 @@ public class Usuario {
               
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
               {
-                 return movRight(Map);
+                 return movRight(Map, lista);
               }
               
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
@@ -630,12 +646,12 @@ public class Usuario {
 
               else if (tecla == 'w' || tecla == 'W') //Si presion la tecla W, es decir arriba....
               {
-                 return movUp(Map);
+                 return movUp(Map, lista);
               }   
 
               else if (tecla == 'a' || tecla == 'A')
               {
-                 return movLeft(Map);
+                 return movLeft(Map, lista);
               } 
             }
             else if (pos[0] != 0 && pos[1] == ancho-2) //Cuando estoy en el (x, 18)
@@ -643,7 +659,7 @@ public class Usuario {
               
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
@@ -655,17 +671,17 @@ public class Usuario {
               
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
               {
-                 return movDown(Map);
+                 return movDown(Map, lista);
               }   
 
               else if (tecla == 'w' || tecla == 'W') //Si presion la tecla W, es decir arriba....
               {
-                 return movUp(Map);
+                 return movUp(Map, lista);
               }   
 
               else if (tecla == 'a' || tecla == 'A')
               {
-                 return movLeft(Map);
+                 return movLeft(Map, lista);
               } 
             }
             else if (pos[0] == 0 && pos[1] != 0) //En el caso cuando I está en el (0,x) x = cualquier número.
@@ -673,18 +689,18 @@ public class Usuario {
 
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
               {
 
-                 return movRight(Map);
+                 return movRight(Map, lista);
               }
 
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
               {
-                 return movDown(Map);
+                 return movDown(Map, lista);
               }
 
               else if (tecla == 'w' || tecla == 'W')
@@ -696,7 +712,7 @@ public class Usuario {
 
               else if (tecla == 'a' || tecla =='A')
               {
-                return movLeft(Map);
+                return movLeft(Map, lista);
               }
             }   
             else if (pos[0] != 0 && pos[1] != 0 ) //Cuando estoy en el (x,y)
@@ -704,27 +720,27 @@ public class Usuario {
               
               if (tecla == 'x' || tecla == 'X') //Es decir, me quedo quieto.
               {
-                 return dontMove(Map);
+                 return dontMove(Map, lista);
               }
 
               else if (tecla == 'd' || tecla == 'D') //Si presionamos la tecla D, es decir a la derecha...
               {
-                 return movRight(Map);
+                 return movRight(Map, lista);
               }
                  
               else if (tecla == 's' || tecla == 'S') //Si presion la tecla S, es decir abajo....
               {
-                 return movDown(Map);
+                 return movDown(Map, lista);
               }   
 
               else if (tecla == 'w' || tecla == 'W') //Si presion la tecla W, es decir arriba....
               {
-                 return movUp(Map);
+                 return movUp(Map, lista);
               }   
 
               else if (tecla == 'a' || tecla =='A')
               {
-                 return movLeft(Map);
+                 return movLeft(Map, lista);
               }
             }
  

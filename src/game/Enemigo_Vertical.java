@@ -12,7 +12,7 @@ package game;
  */
 public class Enemigo_Vertical extends Enemigo_Lineal {
 
-    public Enemigo_Vertical(char tipo, int maxmov, int pasos, char direccion, int y, int x, char nombre) {
+    public Enemigo_Vertical(char tipo, int maxmov, int pasos, char direccion, int x, int y, char nombre) {
         super(tipo, maxmov, pasos, direccion, y, x, nombre);
     }
     
@@ -22,6 +22,8 @@ public class Enemigo_Vertical extends Enemigo_Lineal {
         int x = this.getX();
         int y = this.getY();
         
+        System.out.println(this.getDireccion());
+
         if(this.getMaxmov() != this.getPasos())
         {
             if(this.getDireccion() == 'U' && y-1 >= 0)
@@ -35,7 +37,7 @@ public class Enemigo_Vertical extends Enemigo_Lineal {
 
                         map[y-1][x] = this.getNombre();
                         this.setY(y-1); 
-                        this.setPasos(this.getPasos()+1);
+                        this.setPasos(this.getPasos());
                         return '1';
                 }
 
@@ -85,7 +87,7 @@ public class Enemigo_Vertical extends Enemigo_Lineal {
                     {
                         map[y][x] = '0';    
                     }
-                    map[y+1][x] = this.getDireccion();
+                    map[y+1][x] = this.getNombre();
                     this.setY(y+1);
                     this.setPasos(this.getPasos()+1);
                     return '1';
@@ -117,17 +119,21 @@ public class Enemigo_Vertical extends Enemigo_Lineal {
                 }   
             }
 
+            
             else if(this.getDireccion() == 'D' && y+1 >= largo)
             {
+
                 if(map[y-1][x] == '*' )
                 {
                     return '0'; 
                 }
                 this.setDireccion('U');
+                
                 if(map[y][x] != '*')
                 {
                     map[y][x] = '0';    
                 }
+                
                 map[y-1][x] = this.getNombre();
                 this.setY(y-1);
                 this.setPasos(0);
@@ -135,6 +141,9 @@ public class Enemigo_Vertical extends Enemigo_Lineal {
                 return '1';
             }
         }
+        
+        
+        
     return '1';
     }
     

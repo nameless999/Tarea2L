@@ -2,6 +2,7 @@ package game;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,7 @@ import java.util.List;
  * @author nameless999
  */
 public class Game {
+    
 
     public static char movEnemigos(List<Elemento> lista, char[][] map, int largo,int ancho)
     {
@@ -27,7 +29,9 @@ public class Game {
         }
     return '1';
     }
-    
+
+    static List<Elemento> lista;
+
     public static void main(String[] args) {
         char[][] MapaActual = null;
         File archivo = null;
@@ -42,13 +46,16 @@ public class Game {
             fr = new FileReader (archivo);
             br = new BufferedReader(fr);
             Usuario user = new Usuario();
-            
+            lista = new ArrayList<>();
             // Lectura del fichero
-            int ancho = Integer.parseInt(br.readLine());
+            int ancho = Integer.parseInt(br.readLine())*2;
             int largo = Integer.parseInt(br.readLine());
             Mapa mapa = new Mapa(ancho,largo);
-            MapaActual = mapa.Map(ancho,largo,br,user); 
-
+            MapaActual = mapa.Map(ancho,largo,br,user);
+            lista = Elemento.crearListaEnemigosSwitch(MapaActual, largo, ancho);
+       
+            System.out.println(MapaActual[4][5]);
+            
             System.out.print("\033[2J\033[1;1H");
             System.out.print("▄︻̷̿┻̿═━一  Bienvenido a Death Dungeon V.1.0\n\n");
             System.out.print("Instrucciones del juego: \n\n");
@@ -72,8 +79,13 @@ public class Game {
             System.out.print("Es su turno, por favor haga un movimiento.\n");
             while(true)
             {
-                accion = user.movUsuario(MapaActual, largo, ancho); 
-
+                accion = user.movUsuario(MapaActual, largo, ancho, lista); 
+                
+                if(accion == '1')
+                {
+                   accion = movEnemigos(lista, MapaActual, largo, ancho); 
+                }
+                
                 if(accion == '5')
                 {
                     mapa.PrintMap(ancho,largo); 
@@ -101,6 +113,11 @@ public class Game {
                        System.out.print("Es su turno, por favor haga un movimiento.\n");
                        break;
 
+                    case '2':
+                        System.out.print ("\033[2J\033[1;1H");  
+                       System.out.print("Has ganado, felicitaciones.\n");
+                       System.exit(0);
+                       break;
                     default:
                        break;
                 }  

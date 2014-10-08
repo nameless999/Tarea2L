@@ -22,6 +22,7 @@ public abstract class Enemigo extends Elemento
 
     public Enemigo(char tipo, int maxmov, int pasos, char direccion, int y, int x, char nombre)
     {
+        super('E',nombre);
     	this.tipo = tipo;
     	this.maxmov = maxmov;
     	this.pasos = pasos;
@@ -29,7 +30,6 @@ public abstract class Enemigo extends Elemento
     	this.y = y;
     	this.x= x;
     	this.nombre = nombre;
-        this.setLabel('E');
     }
 
     public abstract char siguiente_movimiento(char[][] map, int largo, int ancho);
