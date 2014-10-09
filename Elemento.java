@@ -1,11 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package game;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +15,9 @@ public abstract class Elemento {
         this.nombre = nombre;
     }
         
-    static List<Elemento> crearListaEnemigosSwitch(char[][] map, int largo, int ancho) 
+    public static List<Elemento> crearListaEnemigosSwitch(char[][] map, int largo, int ancho) 
     {
-        List<Elemento> lista = new ArrayList<>();
+        List<Elemento> lista = new ArrayList<Elemento>();
         int y,x;
         for (y = 0; y < largo; y++)
         {   
@@ -33,31 +25,31 @@ public abstract class Elemento {
             {
                 if(map[y][x] == '2')
                 {			        
-                    lista.add(new Enemigo_Horizontal('H',2,0,'R',x,y,'2'));
+                    lista.add(new Enemigo_Horizontal('H',3,0,'R',x,y,'2'));
                 }
                 else if (map[y][x] == '3')
                 { 
-                    lista.add(new Enemigo_Vertical('V',2,0,'U',x,y,'3'));
+                    lista.add(new Enemigo_Vertical('V',3,0,'U',x,y,'3'));
                 }
 
                 else if (map[y][x] == '4')
                 {
-                    lista.add(new Enemigo_Horizontal('H',3,0,'L',x,y,'4'));
+                    lista.add(new Enemigo_Horizontal('H',4,0,'L',x,y,'4'));
                 }
 
                 else if (map[y][x] == '5')
                 {   
-                    lista.add(new Enemigo_Vertical('V',3,0,'D',x,y,'5'));
+                    lista.add(new Enemigo_Vertical('V',4,0,'D',x,y,'5'));
                 }   
 
                 else if (map[y][x] == '6')
                 {
-                    lista.add(new Enemigo_Horizontal('H',4,0,'R',x,y,'6'));
+                    lista.add(new Enemigo_Reloj('R',2,0,'R',x,y,'6'));
                 }
 
                 else if (map[y][x] == '7')
                 {
-                    lista.add(new Enemigo_Vertical('V',4,0,'U',x,y,'7'));
+                    lista.add(new Enemigo_Contra_Reloj('C',2,0,'L',x,y,'7'));
                 }
 
                 else if (map[y][x] == '8')

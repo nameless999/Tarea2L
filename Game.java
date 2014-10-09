@@ -1,14 +1,10 @@
-package game;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author nameless999
- */
 public class Game {
     
 
@@ -20,10 +16,9 @@ public class Game {
                 
                 Enemigo enemigo = (Enemigo) objeto;
                 a = enemigo.siguiente_movimiento(map, largo, ancho);
-                
                 if(a == '0')
                 {
-                    break;
+                    return '0';
                 }
             }
         }
@@ -46,7 +41,7 @@ public class Game {
             fr = new FileReader (archivo);
             br = new BufferedReader(fr);
             Usuario user = new Usuario();
-            lista = new ArrayList<>();
+            lista = new ArrayList<Elemento>();
             // Lectura del fichero
             int ancho = Integer.parseInt(br.readLine())*2;
             int largo = Integer.parseInt(br.readLine());
@@ -77,15 +72,15 @@ public class Game {
 
             mapa.PrintMap(ancho,largo);
             System.out.print("Es su turno, por favor haga un movimiento.\n");
+            
             while(true)
             {
                 accion = user.movUsuario(MapaActual, largo, ancho, lista); 
-                
+
                 if(accion == '1')
                 {
-                   accion = movEnemigos(lista, MapaActual, largo, ancho); 
+                   accion = movEnemigos(lista, MapaActual, largo, ancho);
                 }
-                
                 if(accion == '5')
                 {
                     mapa.PrintMap(ancho,largo); 
@@ -93,12 +88,6 @@ public class Game {
                     continue;  
                 }
 
-                /*if(accion == '1')
-                {
-                    accion = movEnemigos(listaEnemigosSwitch, map, largo, ancho); 
-                }
-                */
-  
                 switch(accion)
                 {
                     case '0':
@@ -108,7 +97,7 @@ public class Game {
                        break;
 
                     case '1':
-                       
+
                        mapa.PrintMap(ancho, largo);
                        System.out.print("Es su turno, por favor haga un movimiento.\n");
                        break;
@@ -120,10 +109,9 @@ public class Game {
                        break;
                     default:
                        break;
-                }  
+                    }  
             }
-
-        }
+       }
             catch(Exception e){
              e.printStackTrace();
             }finally{

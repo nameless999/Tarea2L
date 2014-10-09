@@ -1,18 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package game;
-
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author nameless999
- */
 public class Switch extends Elemento {
     
     private List<Puerta> Puertas;
@@ -25,13 +13,13 @@ public class Switch extends Elemento {
     
     /******** Función: crearListaPuertas ********
     Descripción: crea una lista enlazada con las puertas que estén enlazadas a un swtich-
-    Parámetros: un arreglo de chars que es la matriz con el mapa, largo y ancho del mapa, label para saber el nombre del switch al que está enlazado.
+    Parámetros: un arreglo de chars que es la matriz con el mapa, largo y ancho del mapa, label para saber el nombre del switch al que está 	enlazado.
     Retorno: lista enlazada con nodos de tipo tPuerta.
     ****************************************/
     static List<Puerta> crearListaPuertas(char[][] map, int largo, int ancho, char label)
     {
 
-        List<Puerta> ListaPuertas = new ArrayList<>();
+        List<Puerta> ListaPuertas = new ArrayList<Puerta>();
 
         for(int y = 0; y < largo; y++)
         {
